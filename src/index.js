@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App.jsx';
+import App from './components/app.jsx';
 
 
 const init = () => {
   ReactDOM.render(
-      <App />,
+      <App time = {7} mistakes = {4}/>,
       document.querySelector(`#root`)
   );
 };
