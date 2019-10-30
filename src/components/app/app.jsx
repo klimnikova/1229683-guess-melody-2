@@ -1,27 +1,59 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import WelcomeScreen from '../welcomescreen/welcomescreen.jsx';
 
-const App = (props) => {
-  const {time, mistakes, onClick} = props;
-  return <section className="welcome">
-    <div className="welcome__logo">
-      <img src="img/melody-logo.png" alt="Угадай мелодию" width="186" height="83"/>
-    </div>
-    <button className="welcome__button" onClick={onClick} ><span className="visually-hidden">Начать игру</span></button>
-    <h2 className="welcome__rules-title">Правила игры</h2>
-    <p className="welcome__text">Правила просты:</p>
-    <ul className="welcome__rules-list">
-      <li>За {time} минут нужно ответить на все вопросы.</li>
-      <li>Можно допустить {mistakes} ошибки.</li>
-    </ul>
-    <p className="welcome__text">Удачи!</p>
-  </section>;
-};
+class App extends React.PureComponent {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      question: -1,
+    };
+  }
+
+  render() {
+    const {
+      time,
+      mistakesCount,
+      questions,
+    } = this.props;
+    const {question} = this.state;
+
+    return this._getScreen(question, () => {
+      this.setState((prevState) => ({
+        question: prevState.question + 1,
+      }));
+    });
+
+
+  }
+  _getScreen(question, onUserAnswer) {
+    if (question === -1) {
+      const {
+        time,
+        mistakesCount,
+      } = this.props;
+
+      return <WelcomeScreen
+        time={time}
+        mistakesCount={mistakesCount}
+        onStartButtonClick = {onUserAnswer}
+      />;
+    }
+    const {questions} = this.props;
+    return <div>
+      Игра на вопрос типа {questions[question].type}
+    </div>;
+
+  }
+}
+
 
 export default App;
 
+
 App.propTypes = {
   time: PropTypes.number.isRequired,
-  mistakes: PropTypes.number.isRequired,
-  onClick: PropTypes.function
+  mistakesCount: PropTypes.number.isRequired,
+  questions: PropTypes.array,
 };

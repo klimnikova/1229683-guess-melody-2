@@ -6,7 +6,7 @@ it(`App correctly renders after relaunch`, () => {
   const tree = renderer
     .create(<App
       time={0}
-      mistakes={0}
+      mistakesCount={0}
       onClick={jest.fn()}
     />)
     .toJSON();

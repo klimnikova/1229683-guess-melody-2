@@ -9,7 +9,7 @@ it(`App is correctly rendered after relaunch`, () =>{
   const clickHandler = jest.fn();
   const app = shallow(<App
     time = {1}
-    mistakes = {1}
+    mistakesCount = {1}
     onClick={clickHandler}
   />);
 
