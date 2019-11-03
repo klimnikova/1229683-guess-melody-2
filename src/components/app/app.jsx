@@ -48,8 +48,6 @@ class App extends React.PureComponent {
 
   render() {
     const {
-      time,
-      mistakesCount,
       questions,
     } = this.props;
     const {question} = this.state;

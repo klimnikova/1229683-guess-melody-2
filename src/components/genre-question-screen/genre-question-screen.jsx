@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const GenreQuestionScreen = ({question, onAnswer}) => {
   const {
-    answers,
+    // answers,
     genre,
   } = question;
 
@@ -22,7 +22,7 @@ const GenreQuestionScreen = ({question, onAnswer}) => {
         </div>
 
         <div className="game__mistakes">
-          <div classNameName="wrong"></div>
+          <div className="wrong"></div>
           <div className="wrong"></div>
           <div className="wrong"></div>
         </div>
@@ -34,7 +34,7 @@ const GenreQuestionScreen = ({question, onAnswer}) => {
           evt.preventDefault();
           onAnswer();
         }}>
-          {answers.map((it, i) => {
+          {question.answers.map((it, i) => {
             return (
               <div key={`answer-${i}`} className="track">
                 <button className="track__button track__button--play" type="button" />
@@ -42,8 +42,20 @@ const GenreQuestionScreen = ({question, onAnswer}) => {
                   <audio />
                 </div>
                 <div className="game__answer">
-                  <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${i}`} id={`answer-${i}`} />
-                  <label className="game__check" htmlFor={`answer-${i}`}>Отметить</label>
+                  <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${i}`} id={`answer-${i}`}
+                    // onChange={(evt)=> {
+                    //   userAnswers.push(
+                    //       evt.target.checked ?
+                    //         evt.target.id
+                    //         : null
+                    //   );
+                    // }}
+                    onChange={(evt) => {
+                      onAnswer(evt.target.value);
+                    }
+                    }
+                  />
+                  <label className="game__check" htmlFor={`answer-${i}`} >Отметить</label>
                 </div>
               </div>
             );
@@ -59,5 +71,5 @@ export default GenreQuestionScreen;
 
 GenreQuestionScreen.propTypes = {
   onAnswer: PropTypes.func.isRequired,
-  question: PropTypes.array,
+  question: PropTypes.object,
 };

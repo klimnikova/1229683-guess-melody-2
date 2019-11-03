@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ArtistQuestionScreen = ({question, onAnswer}) => {
-  const {
-    answers,
-  } = question;
+  // const {
+  //   answers,
+  // } = question;
 
   return (
     <section className="game game--artist">
@@ -38,11 +38,18 @@ const ArtistQuestionScreen = ({question, onAnswer}) => {
           </div>
         </div>
 
-        <form className="game__artist" onChange={onAnswer}>
-          {answers.map((it, i) => {
+        <form className="game__artist" >
+          {question.answers.map((it, i) => {
             return (
               <div key={`answer-${i}`} className="artist">
-                <input className="artist__input visually-hidden" type="radio" name="answer" value={`answer-${i}`} id={`answer-${i}`} />
+                <input
+                  className="artist__input visually-hidden"
+                  type="radio" name="answer"
+                  value={`answer-${i}`}
+                  id={`answer-${i}`}
+                  onChange={(evt)=> {
+                    onAnswer(evt.target.value);
+                  }} />
                 <label className="artist__name" htmlFor={`answer-${i}`}>
                   <img className="artist__picture" src={it.picture} alt={it.artist} />
                   {it.artist}
