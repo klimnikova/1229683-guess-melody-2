@@ -1,42 +1,50 @@
 const questions = [
   {
     type: `genre`,
-    genre: `folk`,
+    genre: `rock`,
     answers: [
       {
-        src: `https://upload.wikimedia.org/wikipedia/commons/8/8f/The_years_go_by_time_is_running_out_AS_Ptz_2018.ogg`,
+        id: 0,
+        src: `http://d.zaix.ru/fCFy.mp3`,
         genre: `jazz`,
       },
       {
-        src: `https://upload.wikimedia.org/wikipedia/commons/8/8f/The_years_go_by_time_is_running_out_AS_Ptz_2018.ogg`,
-        genre: `folk`,
+        id: 1,
+        src: `http://d.zaix.ru/fCFy.mp3`,
+        genre: `classic`,
       },
       {
-        src: `https://upload.wikimedia.org/wikipedia/commons/8/8f/The_years_go_by_time_is_running_out_AS_Ptz_2018.ogg`,
+        id: 2,
+        src: `http://d.zaix.ru/fCFy.mp3`,
         genre: `rock`,
       },
       {
-        src: `https://upload.wikimedia.org/wikipedia/commons/8/8f/The_years_go_by_time_is_running_out_AS_Ptz_2018.ogg`,
-        genre: `folk`,
+        id: 3,
+        src: `http://d.zaix.ru/fCFy.mp3`,
+        genre: `pop`,
       }
     ],
   },
   {
     type: `artist`,
     song: {
+      id: 0,
       artist: `Jim Beam`,
-      src: `https://upload.wikimedia.org/wikipedia/commons/1/1f/Uganda_flag_and_national_anthem_-_Oh_Uganda_Land_o.ogg`,
+      src: `http://d.zaix.ru/fCFy.mp3`,
     },
     answers: [
       {
+        id: 1,
         picture: `http://placehold.it/134x134`,
         artist: `John Snow`,
       },
       {
+        id: 2,
         picture: `http://placehold.it/134x134`,
         artist: `Jack Daniels`,
       },
       {
+        id: 3,
         picture: `http://placehold.it/134x134`,
         artist: `Jim Beam`,
       },

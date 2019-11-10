@@ -1,13 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AudioPlayer from '../audioplayer/audioplayer.jsx';
 
-const ArtistQuestionScreen = ({question, onAnswer}) => {
-  // const {
-  //   answers,
-  // } = question;
+class ArtistQuestionScreen extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <section className="game game--artist">
+    this.state = {
+      isPlaying: false,
+    };
+  }
+
+  render() {
+    const {question, onAnswer} = this.props;
+    const {isPlaying} = this.state;
+    const {
+      answers,
+      song,
+    } = question;
+
+    return <section className="game game--artist">
       <header className="game__header">
         <a className="game__back">
           <span className="visually-hidden">Сыграть ещё раз</span>
@@ -31,26 +43,27 @@ const ArtistQuestionScreen = ({question, onAnswer}) => {
         <h2 className="game__title">Кто исполняет эту песню?</h2>
         <div className="game__track">
           <div className="track">
-            <button className="track__button track__button--play" type="button" />
-            <div className="track__status">
-              <audio />
-            </div>
+            <AudioPlayer
+              isPlaying={isPlaying}
+              onPlayButtonClick={() => this.setState({isPlaying: !isPlaying})}
+              src={song.src}
+            />
           </div>
         </div>
 
         <form className="game__artist" >
-          {question.answers.map((it, i) => {
+          {answers.map((it) => {
             return (
-              <div key={`answer-${i}`} className="artist">
+              <div key={it.id} className="artist">
                 <input
                   className="artist__input visually-hidden"
                   type="radio" name="answer"
-                  value={`answer-${i}`}
-                  id={`answer-${i}`}
+                  value={it.id}
+                  id={it.id}
                   onChange={(evt)=> {
                     onAnswer(evt.target.value);
                   }} />
-                <label className="artist__name" htmlFor={`answer-${i}`}>
+                <label className="artist__name" htmlFor={it.id}>
                   <img className="artist__picture" src={it.picture} alt={it.artist} />
                   {it.artist}
                 </label>
@@ -59,15 +72,25 @@ const ArtistQuestionScreen = ({question, onAnswer}) => {
           })}
         </form>
       </section>
-    </section>
-  );
-};
+    </section>;
+  }
+}
 
 export default ArtistQuestionScreen;
 
 
 ArtistQuestionScreen.propTypes = {
   onAnswer: PropTypes.func.isRequired,
-  question: PropTypes.array,
+  question: PropTypes.shape({
+    answers: PropTypes.arrayOf(PropTypes.shape({
+      artist: PropTypes.string.isRequired,
+      picture: PropTypes.string.isRequired,
+    })).isRequired,
+    song: PropTypes.shape({
+      artist: PropTypes.string.isRequired,
+      src: PropTypes.string.isRequired,
+    }).isRequired,
+    type: PropTypes.oneOf([`genre`, `artist`]).isRequired,
+  }).isRequired,
 };
 

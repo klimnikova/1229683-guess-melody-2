@@ -1,14 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import AudioPlayer from '../audioplayer/audioplayer.jsx';
 
-const GenreQuestionScreen = ({question, onAnswer}) => {
-  const {
-    // answers,
-    genre,
-  } = question;
+class GenreQuestionScreen extends React.PureComponent {
+  constructor(props) {
+    super(props);
 
-  return (
-    <section className="game game--genre">
+    this.state = {
+      activePlayer: -1,
+    };
+  }
+
+  render() {
+    const {question, onAnswer} = this.props;
+    const {
+      answers,
+      genre,
+    } = question;
+
+    return <section className="game game--genre">
       <header className="game__header">
         <a className="game__back">
           <span className="visually-hidden">Сыграть ещё раз</span>
@@ -34,42 +44,47 @@ const GenreQuestionScreen = ({question, onAnswer}) => {
           evt.preventDefault();
           onAnswer();
         }}>
-          {question.answers.map((it, i) => {
-            return (
-              <div key={`answer-${i}`} className="track">
-                <button className="track__button track__button--play" type="button" />
-                <div className="track__status">
-                  <audio />
-                </div>
-                <div className="game__answer">
-                  <input className="game__input visually-hidden" type="checkbox" name="answer" value={`answer-${i}`} id={`answer-${i}`}
-                    // onChange={(evt)=> {
-                    //   userAnswers.push(
-                    //       evt.target.checked ?
-                    //         evt.target.id
-                    //         : null
-                    //   );
-                    // }}
-                    onChange={(evt) => {
-                      onAnswer(evt.target.value);
-                    }
-                    }
-                  />
-                  <label className="game__check" htmlFor={`answer-${i}`} >Отметить</label>
-                </div>
-              </div>
-            );
-          })}
+          {answers.map((it, i) => <div className="track" key={it.id}>
+            <AudioPlayer
+              src={it.src}
+              isPlaying={i === this.state.activePlayer}
+              onPlayButtonClick={() => this.setState({
+                activePlayer: this.state.activePlayer === i ? -1 : i
+              })}
+            />
+            <div className="game__answer">
+              <input className="game__input visually-hidden"
+                type="checkbox"
+                name="answer"
+                value={it.id}
+                id={it.id}
+                // onChange={(evt) => {
+                //   onAnswer(evt.target.value);
+                // }}
+              />
+              <label className="game__check" htmlFor={it.id}>
+              Отметить
+              </label>
+            </div>
+          </div>)}
+
           <button className="game__submit button" type="submit">Ответить</button>
         </form>
-      </section>
-    </section>
-  );
-};
+      </section>;
+    </section>;
+  }
+}
 
 export default GenreQuestionScreen;
 
 GenreQuestionScreen.propTypes = {
   onAnswer: PropTypes.func.isRequired,
-  question: PropTypes.object,
+  question: PropTypes.shape({
+    answers: PropTypes.arrayOf(PropTypes.shape({
+      src: PropTypes.string.isRequired,
+      genre: PropTypes.string.isRequired,
+    })).isRequired,
+    genre: PropTypes.string.isRequired,
+    type: PropTypes.string.isRequired,
+  }).isRequired,
 };

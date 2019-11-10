@@ -27,5 +27,5 @@ export default WelcomeScreen;
 WelcomeScreen.propTypes = {
   time: PropTypes.number.isRequired,
   mistakesCount: PropTypes.number.isRequired,
-  onStartButtonClick: PropTypes.function
+  onStartButtonClick: PropTypes.func.isRequired,
 };
